@@ -10,6 +10,7 @@ package tb.soft;
  */
 
 import java.util.Scanner;
+//import java.util.*;
 
 /**
  * Biblioteka metod do realizacji dialogu z użytkownikiem
@@ -25,12 +26,10 @@ public class ConsoleUserDialog {
 	   
 	   private final Scanner sc = new Scanner(System.in);
 
-	   
 		public void printMessage(String message) {
 			System.out.println(message);
 		}
-		
-		
+
 		public void printInfoMessage(String message) {
 			System.out.println(message);
 			enterString("Nacisnij ENTER");
@@ -116,10 +115,22 @@ public class ConsoleUserDialog {
 	            }
 	        }while(isError);
 	        return d;
-	    }   
+	    }
+/*
+		public void printCollection(Set collection){
+			System.out.println(collection);           //wyswietlamy wszystkie elementy Seta
+		}
 
-		
-} // koniec kasy ConsoleUserDialog
+		public void printCollection(List<Person> collection){
+			for (Person person : collection){          //dla kazdego obiektu z listy wyswietlamy dane
+				System.out.println(Person.personData(person));
+			}
+		}
 
+		public void printCollection(Map<String, PersonJob> collection){
+			System.out.println(collection.values());
+		}
+*/
+} // koniec klasy ConsoleUserDialog
 
 

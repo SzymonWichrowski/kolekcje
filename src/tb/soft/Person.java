@@ -1,12 +1,10 @@
 package tb.soft;
 
-import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.IOException;
 import java.io.PrintWriter;
-
+import java.util.List;
+import java.util.Scanner;
 
 /*
  *  Program: Operacje na obiektach klasy Person
@@ -41,7 +39,6 @@ enum PersonJob {
 		jobName = job_name;
 	}
 
-	
 	@Override
 	public String toString() {
 		return jobName;
@@ -83,8 +80,8 @@ public class Person {
 	
 	private String firstName;
 	private String lastName;
-	private int birthYear;
-	private PersonJob job;
+	protected int birthYear;
+	protected PersonJob job;
  
 	
 	public Person(String first_name, String last_name) throws PersonException {
@@ -93,7 +90,7 @@ public class Person {
 		job = PersonJob.UNKNOWN;
 	}
 
-	
+
 	public String getFirstName() {
 		return firstName;
 	}
@@ -166,7 +163,6 @@ public class Person {
 		}
 		throw new PersonException("Nie ma takiego stanowiska.");
 	}
-
 	
 	@Override
 	public String toString() {  
@@ -174,12 +170,28 @@ public class Person {
 	}
 	
 	
-	public static void printToFile(PrintWriter writer, Person person){
-		writer.println(person.firstName + "#" + person.lastName + 
-				"#" + person.birthYear + "#" + person.job);
+	public static void printToFile(PrintWriter writer, Person person){ //zapisuje dane osoby będącej argumentem
+		writer.println(person.firstName + " " + person.lastName +
+				" " + person.birthYear + " " + person.job);
 	}
 	
-	
+	public static void printToFile(PrintWriter writer, List<Person> list) { //mechanika zapisu w pliku
+
+		for (int i = 0; i < list.size(); i++) {
+			printToFile(writer, list.get(i));
+			System.out.println();
+		}
+	}
+
+	public static void printToFile(String file_name, List<Person> list) throws PersonException { //uzytkownik podaje nazwe pliku
+		try (PrintWriter writer = new PrintWriter(file_name)) {
+			printToFile(writer, list);
+		} catch (FileNotFoundException e) {
+			throw new PersonException("Nie odnaleziono pliku " + file_name);
+		}
+
+	}
+/*
 	public static void printToFile(String file_name, Person person) throws PersonException {
 		try (PrintWriter writer = new PrintWriter(file_name)) {
 			printToFile(writer, person);
@@ -187,22 +199,46 @@ public class Person {
 			throw new PersonException("Nie odnaleziono pliku " + file_name);
 		}
 	}
-	
-	
+
+
+
+
 	public static Person readFromFile(BufferedReader reader) throws PersonException{
 		try {
 			String line = reader.readLine();
-			String[] txt = line.split("#");
+			String[] txt = line.split(" ");
 			Person person = new Person(txt[0], txt[1]);
 			person.setBirthYear(txt[2]);
-			person.setJob(txt[3]);	
+			person.setJob(txt[3]);
 			return person;
 		} catch(IOException e){
 			throw new PersonException("Wystąpił błąd podczas odczytu danych z pliku.");
 		}	
 	}
-	
-	
+
+
+ */
+	public static Person[] readFromFile(Scanner scanner) throws PersonException { //mechanika czytania z pliku
+
+		int fileSize = 10;
+		Person[] person = new Person[fileSize];
+		String line;
+		for (int i = 0; scanner.hasNext(); i++) {
+			line = scanner.nextLine();
+			String[] txt = line.split(" ");
+			person[i] = new Person(txt[0], txt[1]);
+			person[i].setBirthYear(txt[2]);
+			person[i].setJob(txt[3]);
+		}
+
+		return person;
+	}
+
+	public static Person[] readFromFile(String file_name) throws FileNotFoundException, PersonException { //uzytkownik podaje nazwe pliku
+		Scanner scanner = new Scanner(new FileReader(file_name));
+		return readFromFile(scanner);
+	}
+	/*
 	public static Person readFromFile(String file_name) throws PersonException {
 		try (BufferedReader reader = new BufferedReader(new FileReader(new File(file_name)))) {
 			return Person.readFromFile(reader);
@@ -212,5 +248,15 @@ public class Person {
 			throw new PersonException("Wystąpił błąd podczas odczytu danych z pliku.");
 		}	
 	}
-	
+
+
+
+
+	public static String personData(Person person){
+		String birthYear = String.valueOf(person.birthYear);
+		String job = String.valueOf(person.job);
+		return person.firstName+" "+person.lastName+" "+birthYear+" "+job;
+	}
+*/
+
 }  // koniec klasy Person

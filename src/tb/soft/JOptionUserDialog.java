@@ -1,6 +1,7 @@
 package tb.soft;
 
 import javax.swing.*;
+//import java.util.*;
 
 public class JOptionUserDialog extends ConsoleUserDialog{
     @Override
@@ -42,4 +43,21 @@ public class JOptionUserDialog extends ConsoleUserDialog{
     public void printErrorMessage(String message) {
         JOptionPane.showMessageDialog(null, message, "Error", JOptionPane.ERROR_MESSAGE);
     }
+/*
+    @Override
+    public void printCollection(Set collection){
+        JOptionPane.showMessageDialog(null, collection, "Wszystkie elementy Setu", JOptionPane.PLAIN_MESSAGE);
+    }
+
+    @Override
+    public void printCollection(List<Person> collection){
+        JOptionPane.showMessageDialog(null, collection, "Wszystkie elementy listy", JOptionPane.PLAIN_MESSAGE);
+    }
+
+    @Override
+    public void printCollection(Map<String, PersonJob> collection){
+        JOptionPane.showMessageDialog(null, collection.values(), "Wszystkie wartości Mapy", JOptionPane.PLAIN_MESSAGE);
+    }
+
+ */
 }
